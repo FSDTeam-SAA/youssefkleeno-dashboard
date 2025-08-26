@@ -20,7 +20,7 @@ import Image from "next/image";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
-  { name: "Main Category", href: "/category", icon: Grip },
+  { name: "Product", href: "/product", icon: Grip },
   { name: "Sub Category", href: "/sub-category", icon: ShoppingBasket },
   { name: "Order", href: "/orders", icon: ShoppingCart },
   { name: "Fabric", href: "/fabric", icon: FileText },
