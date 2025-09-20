@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import logo from "@/public/images/haviasFooterLogo.png";
+import logo from "@/public/images/logo.png";
 import {
   LayoutDashboard,
   DollarSign,
@@ -37,8 +37,9 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="flex h-screen sticky bottom-0 top-0 w-[280px] flex-col bg-[#1C2228] z-50">
-      <div className="h-[80px] flex items-center justify-start shadow-md px-4">
+    <div className="flex h-screen sticky bottom-0 top-0 w-[280px] flex-col shadow-[0px_16px_48px_0px_#00000029] bg-[#FFFFFF] z-50">
+     
+      <div className="h-[80px] flex items-center justify-start mt-7 mb-16  px-4">
         <Image
           src={logo}
           alt="Company Logo"
@@ -50,7 +51,7 @@ export function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-6 flex flex-col items-center justify-start px-3 overflow-y-auto mt-3">
+      <nav className="flex-1 space-y-6 flex flex-col items-center justify-start  overflow-y-auto mt-3">
         {navigation.map((item) => {
           const isActive =
             pathname === item.href ||
@@ -63,20 +64,20 @@ export function Sidebar() {
               className={cn(
                 "flex w-[90%] mx-auto items-center justify-start gap-2 space-y-1 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200",
                 isActive
-                  ? "bg-white text-black"
-                  : "text-slate-300 hover:bg-slate-600/50 hover:text-white"
+                  ? "bg-[#499FC01A] "
+                  : " hover:bg-[#499FC01A]/20 hover:text-black"
               )}
             >
               <item.icon
                 className={cn(
                   "h-6 w-6 transition-colors duration-200",
-                  isActive ? "text-black" : ""
+                  isActive ? "text-[#499FC0]" : ""
                 )}
               />
               <span
                 className={cn(
                   "font-normal text-base leading-[120%] transition-colors duration-200 text-center",
-                  isActive ? "text-black font-medium" : ""
+                  isActive ? "text-[#499FC0] font-medium" : ""
                 )}
               >
                 {item.name}
@@ -88,7 +89,7 @@ export function Sidebar() {
 
       {/* Logout fixed at bottom */}
       <div className="p-3">
-        <div className="flex items-center justify-start space-y-1 rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-all duration-200 hover:bg-slate-600/50 hover:text-white cursor-pointer">
+        <div className="flex items-center gap-2 justify-start space-y-1 rounded-lg px-3 py-2 text-sm font-medium text-[#D90202] transition-all duration-200 hover:bg-[#499FC01A]/20 hover:text-black  cursor-pointer">
           <LogOut className="h-5 w-5" />
           <span className="font-normal text-base leading-[120%]">Log Out</span>
         </div>
