@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import Image from "next/image";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 export function PersonalInformation() {
   const [isEditing, setIsEditing] = useState(false);
@@ -53,6 +54,20 @@ export function PersonalInformation() {
 
   return (
     <Card className="!border-none">
+        <Breadcrumb className="p-5">
+                  <p className="text-[#2F2F2F] font-semibold text-[24px] mb-4">
+                    Cancellation Policy
+                  </p>
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>Overview</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6 !bg-white rounded-tl-[8px] rounded-tr-[8px] !shadow-none">
         <CardTitle className="text-[18px] font-semibold text-[#282828] flex items-center gap-4">
           <div className="relative w-[50px] h-[50px] rounded-full overflow-hidden bg-[#499FC0] flex items-center justify-center">
