@@ -31,7 +31,7 @@ const navigation = [
     href: "/vehicle-list",
     icon: Car,
     subItems: [
-      { name: "Monthly Subscription", href: "/vehicle-list/monthly" },
+      { name: "Monthly Subscription", href: "/vehicle-list/monthly-subscription" },
       { name: "One-time Wash", href: "/vehicle-list/onetime" },
     ],
   },
