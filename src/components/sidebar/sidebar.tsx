@@ -31,11 +31,18 @@ const navigation = [
     href: "/vehicle-list",
     icon: Car,
     subItems: [
-      { name: "Monthly Subscription", href: "/vehicle-list/monthly" },
-      { name: "One-time Wash", href: "/vehicle-list/onetime" },
+      { name: "Monthly Subscription", href: "/vehicle-list/monthly-subscription" },
+      { name: "One-time Wash", href: "/vehicle-list/one-time-wash" },
     ],
   },
-  { name: "Add Services", href: "/add-services", icon: Plus },
+  {
+    name: "Add Services", href: "/add-services",
+    subItems: [
+      { name: "Monthly Subscription", href: "/services/monthly-subscription" },
+      { name: "One-time Wash", href: "/services/one-time-wash" },
+    ],
+    icon: Plus
+  },
   {
     name: "Booking",
     href: "/booking",
@@ -51,8 +58,8 @@ const navigation = [
     href: "/user-management",
     icon: Users,
     subItems: [
-      { name: "All Users", href: "/user-management/all" },
-      { name: "Premium Users", href: "/user-management/premium" },
+      { name: "Monthly Subscription", href: "/user-management-monthly" },
+      { name: "One-time Wash", href: "/user-management-onetime" },
     ],
   },
   { name: "Time Schedule", href: "/time-schedule", icon: Clock },
