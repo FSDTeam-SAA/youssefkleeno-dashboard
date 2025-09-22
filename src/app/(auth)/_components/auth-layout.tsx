@@ -1,12 +1,12 @@
-import Image from "next/image";
+// import Image from "next/image";
 import React from "react";
-import haviasFooterLogo from '../../../public/images/authlogo.png'
-import loginimage from '../../../public/images/loginimage.png'
+// import haviasFooterLogo from '../../../public/images/authlogo.png'
+// import loginimage from '../../../public/images/loginimage.png'
 
 const AuthLayoutDesign = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="h-screen grid grid-cols-1 md:grid-cols-2 gap-2 bg-[#FAFAFA]  ">
-      <div className="  relative md:grid-cols-1 flex ">
+    <div className="h-screen grid grid-cols-1 md:grid-cols-1 gap-2 bg-[#FAFAFA]  ">
+      {/* <div className="  relative md:grid-cols-1 flex ">
         <Image
           src={loginimage}
           width={1082}
@@ -23,7 +23,7 @@ const AuthLayoutDesign = ({ children }: { children: React.ReactNode }) => {
             className="w-full h-full  object-cover"
           />
         </div>
-      </div>
+      </div> */}
       <div className="md:grid-cols-1 h-full w-full flex items-center justify-center">{children}</div>
     </div>
   );
