@@ -58,8 +58,8 @@ const navigation = [
     href: "/user-management",
     icon: Users,
     subItems: [
-      { name: "All Users", href: "/user-management/all" },
-      { name: "Premium Users", href: "/user-management/premium" },
+      { name: "Monthly Subscription", href: "/user-management-monthly" },
+      { name: "One-time Wash", href: "/user-management-onetime" },
     ],
   },
   { name: "Time Schedule", href: "/time-schedule", icon: Clock },

@@ -1,9 +1,10 @@
 import React from 'react'
+import PromoCodeContainer from './_components/promo-code-container'
 
 const PromoCode = () => {
   return (
     <div>
-      promo code
+      <PromoCodeContainer/>
     </div>
   )
 }
