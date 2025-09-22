@@ -15,10 +15,10 @@ import {
   XCircle,
   List,
   Settings,
-  // LogOut,
   ChevronDown,
   ChevronRight,
 } from "lucide-react"
+
 interface SubItem {
   name: string
   href: string
@@ -58,7 +58,7 @@ const navigation = [
   { name: "Time Schedule", href: "/time-schedule", icon: Clock },
   { name: "Cancellation Policy", href: "/cancellation-policy", icon: XCircle },
   { name: "Cancelled list", href: "/cancelled-list", icon: List },
-  { name: "Settings", href: "/settings", icon: Settings },
+  { name: "Settings", href: "/setting", icon: Settings },
 ]
 
 export function Sidebar() {
@@ -86,7 +86,6 @@ export function Sidebar() {
 
       {/* Navigation */}
       <nav className="flex-1 space-y-1 flex flex-col items-center justify-start overflow-y-auto px-3">
-
         {navigation.map((item) => {
           const isActive =
             pathname === item.href ||
@@ -98,36 +97,33 @@ export function Sidebar() {
 
           return (
             <div key={item.name} className="w-full">
-              <div
-                className={cn(
-                  "flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 cursor-pointer",
-                  isActive || isDropdownOpen
-                    ? "bg-[#E8F4F8]"
-                    : "hover:bg-[#499FC01A]/20 hover:text-black",
-                )}
-                onClick={() => {
-                  if (hasSubItems) {
-                    toggleDropdown(item.name)
-                  }
-                }}
-              >
-                <div className="flex items-center gap-3">
-                  <item.icon
-                    className={cn(
-                      "h-5 w-5 transition-colors duration-200",
-                      isActive || isDropdownOpen ? "text-[#499FC0]" : "text-gray-600",
-                    )}
-                  />
-                  <span
-                    className={cn(
-                      "font-normal text-sm transition-colors duration-200",
-                      isActive || isDropdownOpen ? "text-[#499FC0] font-medium" : "text-gray-700",
-                    )}
-                  >
-                    {item.name}
-                  </span>
-                </div>
-                {hasSubItems && (
+              {hasSubItems ? (
+                // Dropdown parent (no Link, only toggle)
+                <div
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 cursor-pointer",
+                    isActive || isDropdownOpen
+                      ? "bg-[#E8F4F8]"
+                      : "hover:bg-[#499FC01A]/20 hover:text-black",
+                  )}
+                  onClick={() => toggleDropdown(item.name)}
+                >
+                  <div className="flex items-center gap-3">
+                    <item.icon
+                      className={cn(
+                        "h-5 w-5 transition-colors duration-200",
+                        isActive || isDropdownOpen ? "text-[#499FC0]" : "text-gray-600",
+                      )}
+                    />
+                    <span
+                      className={cn(
+                        "font-normal text-sm transition-colors duration-200",
+                        isActive || isDropdownOpen ? "text-[#499FC0] font-medium" : "text-gray-700",
+                      )}
+                    >
+                      {item.name}
+                    </span>
+                  </div>
                   <div className="ml-auto">
                     {isDropdownOpen ? (
                       <ChevronDown className="h-4 w-4 text-gray-400" />
@@ -135,9 +131,29 @@ export function Sidebar() {
                       <ChevronRight className="h-4 w-4 text-gray-400" />
                     )}
                   </div>
-                )}
-              </div>
+                </div>
+              ) : (
+                // Normal item with Link
+                <Link
+                  href={item.href}
+                  className={cn(
+                    "flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200",
+                    isActive
+                      ? "bg-[#E8F4F8] text-[#499FC0] font-medium"
+                      : "text-gray-700 hover:bg-[#499FC01A]/20 hover:text-black",
+                  )}
+                >
+                  <item.icon
+                    className={cn(
+                      "h-5 w-5 mr-3",
+                      isActive ? "text-[#499FC0]" : "text-gray-600",
+                    )}
+                  />
+                  {item.name}
+                </Link>
+              )}
 
+              {/* Sub Items */}
               {hasSubItems && isDropdownOpen && (
                 <div className="ml-6 mt-1 space-y-1 border-l-2 border-[#2F2F2F] pl-4">
                   {item.subItems.map((subItem) => {
@@ -163,7 +179,6 @@ export function Sidebar() {
             </div>
           )
         })}
-
       </nav>
     </div>
   )
