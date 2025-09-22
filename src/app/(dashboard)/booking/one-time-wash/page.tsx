@@ -1,9 +1,10 @@
 import React from 'react'
+import OneTimeWashContainer from './_components/one-time-wash-container'
 
 const OneTimeWash = () => {
   return (
     <div>
-      one time wash
+      <OneTimeWashContainer/>
     </div>
   )
 }
