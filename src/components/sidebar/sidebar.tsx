@@ -25,7 +25,7 @@ interface SubItem {
 }
 
 const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Dashboard", href: "/", icon: LayoutDashboard },
   {
     name: "Vehicle List",
     href: "/vehicle-list",
@@ -41,8 +41,8 @@ const navigation = [
     href: "/booking",
     icon: Calendar,
     subItems: [
-      { name: "Active Bookings", href: "/booking/active" },
-      { name: "Completed Bookings", href: "/booking/completed" },
+      { name: "Monthly Subscription", href: "/booking/monthly-subscription" },
+      { name: "One-time Wash", href: "/booking/one-time-wash" },
     ],
   },
   { name: "Promo Code", href: "/promo-code", icon: Tag },
