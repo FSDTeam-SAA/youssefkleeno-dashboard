@@ -25,7 +25,7 @@ interface SubItem {
 }
 
 const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Dashboard", href: "/", icon: LayoutDashboard },
   {
     name: "Vehicle List",
     href: "/vehicle-list",
