@@ -1,5 +1,5 @@
 import React from 'react'
-import CancelledListPage from './_components/Canclelist-table'
+import CancelledListPage from './_components/CancleListTavel'
 
 const page = () => {
   return (
