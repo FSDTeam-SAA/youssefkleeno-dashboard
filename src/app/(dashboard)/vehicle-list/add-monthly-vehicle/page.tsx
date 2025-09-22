@@ -1,9 +1,9 @@
 import React from 'react'
-import AddVehicle from '../_components/addVehicle'
+import AddVehicle from '../_components/add-monthly-Vehicle'
 
 const page = () => {
     return (
-        <div>
+        <div >
             <AddVehicle />
         </div>
     )
