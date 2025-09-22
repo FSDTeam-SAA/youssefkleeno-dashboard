@@ -24,10 +24,10 @@ const page = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <Link href="/services/add-monthly-vehicle">
+      <Link href="/services/add-monthly-sevices">
         <Button className='flex items-center gap-2 bg-btnPrimary hover:bg-btnPrimary/90'><Plus /> Add Services</Button>
       </Link>
-      <ListOfMonthlyServices/>
+      <ListOfMonthlyServices />
     </div>
   )
 }
