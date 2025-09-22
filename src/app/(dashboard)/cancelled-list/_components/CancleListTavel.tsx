@@ -1,3 +1,4 @@
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -56,16 +57,20 @@ export default function CancelledListPage() {
         <Card className="bg-white shadow-sm">
           <CardContent className="p-0">
             {/* Header with breadcrumb */}
-            <div className="mb-6 p-5">
-              <h1 className="text-2xl font-semibold text-[#2F2F2F] mb-2">
-                Cancelled list
-              </h1>
-              <nav className="text-sm text-gray-500">
-                <span>Dashboard</span>
-                <span className="mx-2">{">"}</span>
-                <span>Cancelled list</span>
-              </nav>
-            </div>
+            <Breadcrumb className="p-5">
+                  <p className="text-[#2F2F2F] font-semibold text-[24px] mb-4">
+                  Cancelled list
+                  </p>
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>Cancelled list</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
             <Table>
               <TableHeader className="bg-[#FAFAFA]">
                 <TableRow className="">
