@@ -137,7 +137,7 @@ export default function AddoneTimewash() {
                             <Button
                                 type="button"
                                 variant="ghost"
-                                className="text-blue-500 hover:text-blue-600"
+                                className="text-[#499FC0] hover:text-[#499FC0]/90"
                                 onClick={() => form.reset()}
                             >
                                 <X />  Cancel

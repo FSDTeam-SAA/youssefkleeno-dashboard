@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { ImagePlus } from "lucide-react"
+import { ImagePlus, X } from "lucide-react"
 import Image from "next/image"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Card, CardContent } from "@/components/ui/card"
@@ -46,18 +46,22 @@ export default function AddMonthlyServiceForm() {
   return (
     <Card className='pt-8 px-6'>
       <Breadcrumb>
-        <p className='text-[#2F2F2F] font-semibold text-[24px] mb-4'>Vehicle List</p>
+        <p className='text-[#2F2F2F] font-semibold text-[24px] mb-4'>Add Services</p>
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
+            <BreadcrumbLink href="/">Services List</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Add Monthly Vehicle</BreadcrumbPage>
+            <BreadcrumbLink href="/">Add Monthly Subscription list</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Add Services</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
@@ -76,7 +80,7 @@ export default function AddMonthlyServiceForm() {
                   <FormItem>
                     <FormLabel>Service name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter a name" {...field} />
+                      <Input className="py-5" placeholder="Enter a name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -91,7 +95,7 @@ export default function AddMonthlyServiceForm() {
                   <FormItem>
                     <FormLabel>Set color for note</FormLabel>
                     <FormControl>
-                      <Input type="color" {...field} className="w-12 h-10 p-1" />
+                      <Input type="color" {...field} className="w-full h-10 p-1" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -108,7 +112,7 @@ export default function AddMonthlyServiceForm() {
                     <FormControl>
                       <Textarea
                         placeholder="Enter description here..."
-                        rows={5}
+                        rows={15}
                         {...field}
                       />
                     </FormControl>
@@ -117,81 +121,89 @@ export default function AddMonthlyServiceForm() {
                 )}
               />
 
-              {/* Note */}
-              <FormField
-                control={form.control}
-                name="note"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Note</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter a note" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="space-y-5">
 
-              {/* Service Image */}
-              <FormField
-                control={form.control}
-                name="serviceImage"
-                render={({ field }) => (
-                  <FormItem className="col-span-2">
-                    <FormLabel>Add Service Image</FormLabel>
-                    <FormControl>
-                      <div
-                        className="w-full h-32 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center cursor-pointer relative"
-                        onClick={() =>
-                          document.getElementById("serviceImageInput")?.click()
-                        }
-                      >
-                        {preview ? (
-                          <Image
-                            width={200}
-                            height={200}
-                            src={preview}
-                            alt="Preview"
-                            className="h-full w-full object-contain rounded-md"
-                          />
-                        ) : (
-                          <div className="flex flex-col items-center text-gray-400">
-                            <ImagePlus className="w-8 h-8" />
-                            <p className="text-sm mt-1">Click to upload</p>
-                          </div>
-                        )}
-                        <input
-                          id="serviceImageInput"
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={(e) => {
-                            const file = e.target.files?.[0]
-                            if (file) {
-                              field.onChange(file)
-                              setPreview(URL.createObjectURL(file))
-                            }
-                          }}
+                {/* Note */}
+                <FormField
+                  control={form.control}
+                  name="note"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Note</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Enter note here..."
+                          rows={5}
+                          {...field}
                         />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Service Image */}
+                <FormField
+                  control={form.control}
+                  name="serviceImage"
+                  render={({ field }) => (
+                    <FormItem className="col-span-2">
+                      <FormLabel>Add Service Image</FormLabel>
+                      <FormControl>
+                        <div
+                          className="w-full h-32 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center cursor-pointer relative"
+                          onClick={() =>
+                            document.getElementById("serviceImageInput")?.click()
+                          }
+                        >
+                          {preview ? (
+                            <Image
+                              width={200}
+                              height={200}
+                              src={preview}
+                              alt="Preview"
+                              className="h-full w-full object-contain rounded-md"
+                            />
+                          ) : (
+                            <div className="flex flex-col items-center text-gray-400">
+                              <ImagePlus className="w-8 h-8" />
+                              <p className="text-sm mt-1">Click to upload</p>
+                            </div>
+                          )}
+                          <input
+                            id="serviceImageInput"
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0]
+                              if (file) {
+                                field.onChange(file)
+                                setPreview(URL.createObjectURL(file))
+                              }
+                            }}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
             </div>
 
             {/* Buttons */}
-            <div className="flex justify-end gap-4">
+            <div className="flex justify-center gap-4">
               <Button
                 type="button"
                 variant="ghost"
-                className="text-blue-500 hover:text-blue-600"
+                className="text-[#499FC0] hover:text-[#499FC0]/90"
                 onClick={() => form.reset()}
               >
-                Cancel
+                <X />  Cancel
               </Button>
-              <Button type="submit" className="bg-sky-600 hover:bg-sky-700">
+              <Button type="submit" className="bg-btnPrimary hover:bg-btnPrimary/90">
                 Save
               </Button>
             </div>

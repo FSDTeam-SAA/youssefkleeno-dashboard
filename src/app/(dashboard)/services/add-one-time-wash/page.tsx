@@ -1,9 +1,10 @@
 import React from 'react'
+import AddOneTImeWash from '../_components/addOneTImeWash'
 
 const page = () => {
   return (
     <div>
-     sdfdssdfsdf
+     <AddOneTImeWash/>
     </div>
   )
 }
