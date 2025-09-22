@@ -31,11 +31,18 @@ const navigation = [
     href: "/vehicle-list",
     icon: Car,
     subItems: [
-      { name: "Monthly Subscription", href: "/vehicle-list/monthly" },
-      { name: "One-time Wash", href: "/vehicle-list/onetime" },
+      { name: "Monthly Subscription", href: "/vehicle-list/monthly-subscription" },
+      { name: "One-time Wash", href: "/vehicle-list/one-time-wash" },
     ],
   },
-  { name: "Add Services", href: "/add-services", icon: Plus },
+  {
+    name: "Add Services", href: "/add-services",
+    subItems: [
+      { name: "Monthly Subscription", href: "/services/monthly-subscription" },
+      { name: "One-time Wash", href: "/services/one-time-wash" },
+    ],
+    icon: Plus
+  },
   {
     name: "Booking",
     href: "/booking",
