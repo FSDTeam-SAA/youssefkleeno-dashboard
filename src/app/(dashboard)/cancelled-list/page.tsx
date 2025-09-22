@@ -1,10 +1,10 @@
 import React from 'react'
-import { PersonalInformation } from './_components/Profile-information'
+import CancelledListPage from './_components/Canclelist-table'
 
 const page = () => {
   return (
     <div>
-      <PersonalInformation/>
+      <CancelledListPage/>
     </div>
   )
 }
