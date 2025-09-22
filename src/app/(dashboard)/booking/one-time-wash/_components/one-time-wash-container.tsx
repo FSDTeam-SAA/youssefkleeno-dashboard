@@ -87,11 +87,11 @@ const OneTimeWashContainer = () => {
       <div className="flex items-center justify-between px-6">
         <Breadcrumbs title="Booking" items={breadcrumbItems} />
         <div>
-          <button className="flex items-center gap-1 text-lg font-medium text-white leading-[120%] bg-[#499FC0] py-[10px] px-[15px] rounded-[4px]">
+          <button className="flex items-center gap-1 bg-[#499FC0] py-[10px] px-[15px] rounded-[4px]">
             <span>
-              <Calendar className="w-5 h-5" />
+              <Calendar className="w-5 h-5 text-white" />
             </span>{" "}
-            <span>Date</span>
+            <span className="text-lg font-think text-white leading-[120%]">Date</span>
           </button>
         </div>
       </div>
@@ -167,7 +167,7 @@ const OneTimeWashContainer = () => {
                 </td>
                 <td className="py-7 pr-6 flex items-center justify-center">
                   <button
-                    className="text-lg font-medium text-[#499FC0] leading-[120%] py-[9px] px-[36px] bg-[background: #499FC01A;
+                    className="text-lg font-medium bg-[#499FC01A] text-[#499FC0] leading-[120%] py-[9px] px-[36px] bg-[background: #499FC01A;
 ] rounded-[6px] border border-[#499FC04D]"
                   >
                     Approve
