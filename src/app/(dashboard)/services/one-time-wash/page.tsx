@@ -8,7 +8,8 @@ import ListOfOneTimeServices from '../_components/listOfOneTimeServices'
 
 const page = () => {
     return (
-        <div className='bg-[#FAFAFA] flex flex-col gap-8 py-8 px-6 rounded-lg shadow-[0px_4px_5px_0px_#0000001A]'>
+        <div className='bg-[#FAFAFA] flex flex-col  rounded-lg shadow-[0px_4px_5px_0px_#0000001A]'>
+          <div className='flex flex-col gap-8 px-6 py-8'>
             <Breadcrumb>
                 <p className='text-[#2F2F2F] font-semibold text-[24px] mb-4'>Services List</p>
                 <BreadcrumbList>
@@ -26,6 +27,7 @@ const page = () => {
                 </BreadcrumbList>
             </Breadcrumb>
             <Link href="/services/add-one-time-wash"><Button className='flex items-center gap-2 bg-btnPrimary hover:bg-btnPrimary/90'><Plus /> Add Services</Button></Link>
+          </div>
             <ListOfOneTimeServices />
         </div>
     )
