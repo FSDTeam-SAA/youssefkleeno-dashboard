@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import {
     Table,
     TableBody,
@@ -10,8 +10,11 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Bike, Pencil, Trash2 } from "lucide-react"
+import YoussefkleenoPagination from "@/components/ui/YoussefkleenoPagination"
 
 const ListOfOneTimeServices = () => {
+        const [currentPage, setCurrentPage] = useState(1);
+    
     const vehicles = [
         { id: 102, name: "Motorcycle", date: "08/21/2025" },
         { id: 102, name: "Motorcycle", date: "08/21/2025" },
@@ -45,7 +48,7 @@ const ListOfOneTimeServices = () => {
                     {vehicles.map((v, i) => (
                         <TableRow key={i} className="hover:bg-muted/20">
                             {/* Vehicle ID */}
-                            <TableCell className="font-medium text-center py-10">{v.id}</TableCell>
+                            <TableCell className="font-medium text-center py-10 text-lg text-[#2F2F2F]">{v.id}</TableCell>
 
                             {/* Vehicle Name with Icon */}
                             <TableCell>
@@ -71,6 +74,21 @@ const ListOfOneTimeServices = () => {
                     ))}
                 </TableBody>
             </Table>
+             <div className="">
+                <div className="bg-white flex items-center justify-between py-[20px] px-[50px]">
+                    <p className="text-xl font-normal leading-[120%] text-[#707070]">
+                        Showing {currentPage} to 5 of 12 results
+                    </p>
+
+                    <div>
+                        <YoussefkleenoPagination
+                            totalPages={8}
+                            currentPage={currentPage}
+                            onPageChange={(page) => setCurrentPage(page)}
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
