@@ -25,17 +25,17 @@ const ListOfOneTimeServices = () => {
         <div className="w-full overflow-x-auto">
             <Table className="">
                 <TableHeader>
-                    <TableRow className="bg-[#FAFAFA]">
-                        <TableHead className="text-center w-[150px] font-semibold">
-                            Services ID
+                    <TableRow className="bg-[#f1efef]">
+                        <TableHead className="text-center py-5 text-[#2F2F2F] font-medium  w-[150px] text-lg">
+                            Vehicle ID
                         </TableHead>
-                        <TableHead className="text-center font-semibold">
-                            Services Name
+                        <TableHead className="text-center py-5 text-[#2F2F2F] font-medium  w-[150px] text-lg">
+                            Vehicle Name
                         </TableHead>
-                        <TableHead className="text-center font-semibold">
-                            Date
+                        <TableHead className="text-center py-5 text-[#2F2F2F] font-medium  w-[150px] text-lg">
+                            Add Date
                         </TableHead>
-                        <TableHead className="text-center font-semibold w-[120px]">
+                        <TableHead className="text-center py-5 text-[#2F2F2F] font-medium  w-[150px] text-lg ">
                             Action
                         </TableHead>
                     </TableRow>
@@ -53,12 +53,12 @@ const ListOfOneTimeServices = () => {
                                     <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
                                         <Bike className="w-4 h-4 text-[#499FC0]" />
                                     </div>
-                                    <span >{v.name}</span>
+                                    <span className="text-[#1F2937] text-lg">{v.name}</span>
                                 </div>
                             </TableCell>
 
                             {/* Add Date */}
-                            <TableCell className="text-center">{v.date}</TableCell>
+                            <TableCell className="text-center text-lg font-medium text-[#2F2F2F]">{v.date}</TableCell>
 
                             {/* Actions */}
                             <TableCell>

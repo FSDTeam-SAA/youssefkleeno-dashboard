@@ -7,7 +7,8 @@ import Link from 'next/link'
 
 const page = () => {
   return (
-    <div className='bg-[#FAFAFA] flex flex-col gap-8 py-8 px-6 rounded-lg shadow-[0px_4px_5px_0px_#0000001A]'>
+    <div className='bg-[#FAFAFA]   rounded-lg shadow-[0px_4px_5px_0px_#0000001A]'>
+     <div className='py-8 px-6 flex flex-col gap-8'>
       <Breadcrumb>
         <p className='text-[#2F2F2F] font-semibold text-[24px] mb-4'>Vehicle List</p>
         <BreadcrumbList>
@@ -27,6 +28,7 @@ const page = () => {
       <Link href="/vehicle-list/add-monthly-vehicle">
         <Button className='flex items-center gap-2 bg-btnPrimary hover:bg-btnPrimary/90'><Plus /> Add Vehicle</Button>
       </Link>
+     </div>
       <Listofvehicle />
     </div>
   )
