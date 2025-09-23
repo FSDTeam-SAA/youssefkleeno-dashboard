@@ -15,7 +15,7 @@ interface BreadcrumbsProps {
 
 export function Breadcrumbs({ items, title }: BreadcrumbsProps) {
   return (
-    <div className="mb-4">
+    <div className="">
       {title && (
         <h2 className="text-2xl font-semibold text-[#2F2F2F] leading-[120%] mb-4">
           {title}
