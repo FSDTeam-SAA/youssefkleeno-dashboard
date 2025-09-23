@@ -8,7 +8,8 @@ import Link from 'next/link'
 
 const page = () => {
     return (
-        <div className='bg-[#FAFAFA] flex flex-col gap-8 py-8 px-6 rounded-lg shadow-[0px_4px_5px_0px_#0000001A]'>
+        <div className='bg-[#FAFAFA] flex flex-col  rounded-lg shadow-[0px_4px_5px_0px_#0000001A]'>
+         <div className='py-8 px-6 flex flex-col gap-8'>
             <Breadcrumb>
                 <p className='text-[#2F2F2F] font-semibold text-[24px] mb-4'>Vehicle List</p>
                 <BreadcrumbList>
@@ -26,6 +27,7 @@ const page = () => {
                 </BreadcrumbList>
             </Breadcrumb>
             <Link href="/vehicle-list/add-one-time-wash"><Button className='flex items-center gap-2 bg-btnPrimary hover:bg-btnPrimary/90'><Plus /> Add Vehicle</Button></Link>
+         </div>
             {/* <AddoneTimewash /> */}
             <ListofOneTimeVehicle />
         </div>

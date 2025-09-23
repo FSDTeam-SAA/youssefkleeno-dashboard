@@ -1,7 +1,7 @@
 import React from 'react'
 import CancelledListPage from './_components/CancleListTable'
 
-const page = () => {
+const Page = () => {
   return (
     <div>
       <CancelledListPage/>
@@ -9,4 +9,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

@@ -1,186 +1,139 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+"use client";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import YoussefkleenoPagination from "@/components/ui/YoussefkleenoPagination";
+import React, { useState } from "react";
 
-// Sample data matching the image
-const cancelledOrders = [
-  {
-    userId: 102,
-    phoneNumber: "(555) 123-4567",
-    refundAmount: "$10",
-    orderDate: "08/21/2025",
-    cancelDate: "08/21/2025",
-  },
-  {
-    userId: 102,
-    phoneNumber: "(555) 123-4567",
-    refundAmount: "$10",
-    orderDate: "08/21/2025",
-    cancelDate: "08/21/2025",
-  },
-  {
-    userId: 102,
-    phoneNumber: "(555) 123-4567",
-    refundAmount: "$10",
-    orderDate: "08/21/2025",
-    cancelDate: "08/21/2025",
-  },
-  {
-    userId: 102,
-    phoneNumber: "(555) 123-4567",
-    refundAmount: "$10",
-    orderDate: "08/21/2025",
-    cancelDate: "08/21/2025",
-  },
-  {
-    userId: 102,
-    phoneNumber: "(555) 123-4567",
-    refundAmount: "$10",
-    orderDate: "08/21/2025",
-    cancelDate: "08/21/2025",
-  },
-];
+const CancelledListPage = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const breadcrumbItems = [
+    { label: "Dashboard", href: "/" },
+    { label: "Cancelled list" },
+  ];
 
-export default function CancelledListPage() {
+  const cancelledOrders = [
+    {
+      userId: 102,
+      phoneNumber: "(555) 123-4567",
+      refundAmount: "$10",
+      orderDate: "08/21/2025",
+      cancelDate: "08/21/2025",
+    },
+    {
+      userId: 102,
+      phoneNumber: "(555) 123-4567",
+      refundAmount: "$10",
+      orderDate: "08/21/2025",
+      cancelDate: "08/21/2025",
+    },
+    {
+      userId: 102,
+      phoneNumber: "(555) 123-4567",
+      refundAmount: "$10",
+      orderDate: "08/21/2025",
+      cancelDate: "08/21/2025",
+    },
+    {
+      userId: 102,
+      phoneNumber: "(555) 123-4567",
+      refundAmount: "$10",
+      orderDate: "08/21/2025",
+      cancelDate: "08/21/2025",
+    },
+    {
+      userId: 102,
+      phoneNumber: "(555) 123-4567",
+      refundAmount: "$10",
+      orderDate: "08/21/2025",
+      cancelDate: "08/21/2025",
+    },
+  ];
   return (
-    <div className="min-h-screen bg-white ">
-      <div className="mx-auto w-full">
-        {/* Main content card */}
-        <Card className="bg-white shadow-sm">
-          <CardContent className="p-0">
-            {/* Header with breadcrumb */}
-            <Breadcrumb className="p-5">
-                  <p className="text-[#2F2F2F] font-semibold text-[24px] mb-4">
-                  Cancelled list
-                  </p>
-                  <BreadcrumbList>
-                    <BreadcrumbItem>
-                      <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                      <BreadcrumbPage>Cancelled list</BreadcrumbPage>
-                    </BreadcrumbItem>
-                  </BreadcrumbList>
-                </Breadcrumb>
-            <Table>
-              <TableHeader className="bg-[#FAFAFA]">
-                <TableRow className="">
-                  <TableHead className="text-[#2F2F2F] font-medium py-4 px-6">
-                    User ID
-                  </TableHead>
-                  <TableHead className="text-[#2F2F2F] font-medium py-4 px-6">
-                    Phone Number
-                  </TableHead>
-                  <TableHead className="text-[#2F2F2F] font-medium py-4 px-6">
-                    Refund Amount
-                  </TableHead>
-                  <TableHead className="text-[#2F2F2F] font-medium py-4 px-6">
-                    Order Date
-                  </TableHead>
-                  <TableHead className="text-[#2F2F2F] font-medium py-4 px-6">
-                    Cancel Date
-                  </TableHead>
-                  <TableHead className="text-[#2F2F2F] font-medium py-4 px-6">
-                    Action
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {cancelledOrders.map((order, index) => (
-                  <TableRow
-                    key={index}
-                    className="border-b border-gray-100 hover:bg-gray-50/50"
-                  >
-                    <TableCell className="py-4 px-6 text-[#2F2F2F]">
-                      {order.userId}
-                    </TableCell>
-                    <TableCell className="py-4 px-6 text-[#2F2F2F]">
-                      {order.phoneNumber}
-                    </TableCell>
-                    <TableCell className="py-4 px-6 text-[#2F2F2F]">
-                      {order.refundAmount}
-                    </TableCell>
-                    <TableCell className="py-4 px-6 text-[#2F2F2F]">
-                      {order.orderDate}
-                    </TableCell>
-                    <TableCell className="py-4 px-6 text-[#2F2F2F]">
-                      {order.cancelDate}
-                    </TableCell>
-                    <TableCell className="py-4 px-6">
-                      <div className="flex gap-2">
-                        <Button
-                          size="sm"
-                          className="bg-[#499FC01A] text-[#499FC0] hover:bg-[#499FC0]/20 hover:text-[#499FC0] border-1  w-[140px]  h-[40px] text-sm font-medium  border-[#499FC0]"
-                        >
-                          Approve
-                        </Button>
-                        <Button
-                          size="sm"
-                          className="bg-[#D902021A] text-[#D90202] hover:bg-red-200 border-0 w-[140px] h-[40px] text-sm font-medium"
-                        >
-                          Reject
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
+    <div className="py-[30px] shadow-[0px_4px_5px_0px_#0000001A] bg-white rounded-[16px] border-t mb-10">
+      {/* breadcrumb and button here */}
+      <div className="flex items-center justify-between px-6">
+        <Breadcrumbs title="Cancelled list" items={breadcrumbItems} />
+      </div>
+      {/* booking table here */}
+      <table className="w-full rounded-[6px] mt-10">
+        <thead className="bg-[#FAFAFA] ">
+          <tr className="">
+            <th className="text-lg font-medium text-[#2F2F2F] leading-[120%] py-[21px] pl-6">
+              User ID
+            </th>
+            <th className="text-lg font-medium text-[#2F2F2F] leading-[120%] py-[21px]">
+              Phone Number
+            </th>
+            <th className="text-lg font-medium text-[#2F2F2F] leading-[120%] py-[21px]">
+              Refund Amount
+            </th>
+            <th className="text-lg font-medium text-[#2F2F2F] leading-[120%] py-[21px]">
+              Order Date
+            </th>
+            <th className="text-lg font-medium text-[#2F2F2F] leading-[120%] py-[21px]">
+              Cancel Date
+            </th>
+            <th className="text-lg font-medium text-[#2F2F2F] leading-[120%] py-[21px] pr-6">
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {cancelledOrders?.map((item) => {
+            return (
+              <tr key={item?.userId} className="border border-[#0000000D]">
+                <td className="text-lg font-medium text-[#2F2F2F] leading-[120%] text-center py-7 pl-6">
+                  {item?.userId}
+                </td>
+                <td className="text-lg font-medium text-[#2F2F2F] leading-[120%] text-center py-7">
+                  {item?.phoneNumber}
+                </td>
+                <td className="text-lg font-medium text-[#2F2F2F] leading-[150%] text-center py-7">
+                  {item?.refundAmount}
+                </td>
+                <td className="w-[150px] text-lg font-medium text-[#2F2F2F] leading-[150%] text-center py-7">
+                  {item?.orderDate}
+                </td>
+                <td className="w-[220px] text-lg font-medium text-[#2F2F2F] leading-[150%] text-center py-7">
+                  {item?.cancelDate}
+                </td>
+                <td className="w-[350px] py-7 pr-6 ">
+                  <div className="flex items-center justify-center gap-4">
+                    <button
+                      className="text-lg font-medium bg-[#499FC01A] text-[#499FC0] leading-[120%] py-[9px] px-[36px] bg-[background: #499FC01A;
+] rounded-[6px] border border-[#499FC04D]"
+                    >
+                      Approve
+                    </button>
+                    <button
+                      className="text-lg font-medium bg-[#D902021A] text-[#D90202] leading-[120%] py-[9px] px-[45px] bg-[background: #499FC01A;
+] rounded-[6px] border border-[#D902024D]"
+                    >
+                      Reject
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <div className="">
+        <div className="bg-white flex items-center justify-between py-[20px] px-[50px]">
+          <p className="text-xl font-normal leading-[120%] text-[#707070]">
+            Showing {currentPage} to 5 of 12 results
+          </p>
 
-        {/* Pagination */}
-        {/* <div className="mt-6 flex items-center justify-between">
-          <div className="text-sm text-gray-500">Showing 1 to 5 of 12 results</div>
-          <div className="flex items-center gap-1">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 w-8 p-0 bg-blue-500 text-white border-blue-500 hover:bg-blue-600"
-            >
-              1
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 w-8 p-0 text-gray-500 border-gray-300 hover:bg-gray-50 bg-transparent"
-            >
-              2
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 w-8 p-0 text-gray-500 border-gray-300 hover:bg-gray-50 bg-transparent"
-            >
-              3
-            </Button>
-            <span className="px-2 text-gray-400">...</span>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 w-8 p-0 text-gray-500 border-gray-300 hover:bg-gray-50 bg-transparent"
-            >
-              8
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 w-8 p-0 text-gray-500 border-gray-300 hover:bg-gray-50 bg-transparent"
-            >
-              {"›"}
-            </Button>
+          <div>
+            <YoussefkleenoPagination
+              totalPages={8}
+              currentPage={currentPage}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default CancelledListPage;
