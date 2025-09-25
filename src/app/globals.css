@@ -76,3 +76,109 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+
+
+
+
+
+/* Simplified Jodit editor styles using standard CSS instead of @apply */
+.jodit-container {
+  width: 100%;
+}
+
+.jodit-container .jodit-workplace {
+  border: 0;
+}
+
+.jodit-container .jodit-toolbar {
+  border-bottom: 1px solid var(--border);
+  background-color: color-mix(in srgb, var(--muted) 30%, transparent);
+}
+
+.jodit-container .jodit-wysiwyg {
+  min-height: 200px;
+  padding: 1rem;
+}
+
+.jodit-container .jodit-wysiwyg:focus {
+  outline: none;
+}
+
+.jodit-container .jodit-status-bar {
+  border-top: 1px solid var(--border);
+  background-color: color-mix(in srgb, var(--muted) 30%, transparent);
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.jodit-container .jodit-toolbar-button:hover {
+  background-color: var(--muted);
+}
+
+.jodit-container .jodit-toolbar-button.jodit-toolbar-button_active {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.jodit-container .jodit-drag-and-drop-file-box {
+  border: 2px dashed color-mix(in srgb, var(--muted-foreground) 25%, transparent);
+  background-color: color-mix(in srgb, var(--muted) 10%, transparent);
+}
+
+/* Enhanced Jodit editor list styles to fix list display issues */
+.jodit-container .jodit-wysiwyg ul {
+  list-style-type: disc !important;
+  margin: 1em 0 !important;
+  padding-left: 2em !important;
+}
+
+.jodit-container .jodit-wysiwyg ol {
+  list-style-type: decimal !important;
+  margin: 1em 0 !important;
+  padding-left: 2em !important;
+}
+
+.jodit-container .jodit-wysiwyg li {
+  display: list-item !important;
+  margin: 0.25em 0 !important;
+  line-height: 1.5 !important;
+}
+
+.jodit-container .jodit-wysiwyg ul ul {
+  list-style-type: circle !important;
+  margin: 0.5em 0 !important;
+}
+
+.jodit-container .jodit-wysiwyg ul ul ul {
+  list-style-type: square !important;
+}
+
+.jodit-container .jodit-wysiwyg ol ol {
+  list-style-type: lower-alpha !important;
+}
+
+.jodit-container .jodit-wysiwyg ol ol ol {
+  list-style-type: lower-roman !important;
+}
+
+/* Fix list indentation and spacing issues */
+.jodit-container .jodit-wysiwyg ul li,
+.jodit-container .jodit-wysiwyg ol li {
+  position: relative !important;
+  padding-left: 0.5em !important;
+}
+
+/* Ensure list markers are visible and properly positioned */
+.jodit-container .jodit-wysiwyg ul li::marker,
+.jodit-container .jodit-wysiwyg ol li::marker {
+  color: var(--foreground) !important;
+}
+
+/* Fix nested list indentation */
+.jodit-container .jodit-wysiwyg li > ul,
+.jodit-container .jodit-wysiwyg li > ol {
+  margin-top: 0.25em !important;
+  margin-bottom: 0.25em !important;
+}
