@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import {Montserrat} from 'next/font/google';
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/providers/query-provider";
-
+import AuthProvider from "@/providers/AuthProvider";
 
 const geistSans = Montserrat({
   subsets: ["latin"],
   variable: "--font-geist-sans",
-  weight: ["100","200","400", "500", "600", "700"],
+  weight: ["100", "200", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -22,12 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.className} antialiased`}
-      >
-        <QueryProvider>
-          {children}
-        </QueryProvider>
+      <body className={`${geistSans.className} antialiased`}>
+        <AuthProvider>
+          <QueryProvider>{children}</QueryProvider>
+        </AuthProvider>
       </body>
     </html>
   );
