@@ -51,3 +51,4 @@ export async function updateProfileInfo(token: string, payload: ProfileUpdatePay
   if (!response.ok) throw new Error(resData.message || "Failed to update profile");
   return resData;
 }
+
