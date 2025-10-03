@@ -30,6 +30,7 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { CalendarIcon, X } from "lucide-react";
+import { useAddPromocode } from "@/hooks/ApiClling";
 
 const formSchema = z.object({
   code: z.string().min(2, {
@@ -50,6 +51,10 @@ const formSchema = z.object({
 });
 
 const AddPromoCodeForm = () => {
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGJmZjg3NzIwZmZmYTNiYjA2ZjEyMDYiLCJlbWFpbCI6Im5pbG95QGV4YW1wbGUuY29tIiwiaWF0IjoxNzU5Mzk3OTI1LCJleHAiOjE3NTk0ODQzMjV9.sLl3FujxPqzpHsnClunVYreoCFhjdl08nrnh1uVCf0s";
+
+  const addPromocode = useAddPromocode(token);
   const breadcrumbItems = [
     { label: "Dashboard", href: "/" },
     { label: "Promo Code List", href: "/promo-code" },
@@ -69,8 +74,16 @@ const AddPromoCodeForm = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    const payload = {
+      code: values.code,
+      discountPrice: Number(values.discountPrice),
+      startDate: values.startDate,
+      expiryDate: values.expiryDate,
+      status: values.status
+    }
+    addPromocode.mutate(payload)
   }
+
   return (
     <div className="py-[30px] shadow-[0px_4px_5px_0px_#0000001A] bg-white rounded-[16px] border-t mb-10">
       {/* breadcrumb and button here */}
@@ -135,16 +148,15 @@ const AddPromoCodeForm = () => {
                         <FormControl>
                           <Button
                             variant="outline"
-                            className={`h-[56px] pl-3 text-left font-normal ${
-                              !field.value && "text-muted-foreground"
-                            }`}
+                            className={`h-[56px] pl-3 text-left font-normal ${!field.value && "text-muted-foreground"
+                              }`}
                           >
                             {field.value
                               ? field.value.toLocaleDateString("en-US", {
-                                  day: "2-digit",
-                                  month: "long",
-                                  year: "numeric",
-                                })
+                                day: "2-digit",
+                                month: "long",
+                                year: "numeric",
+                              })
                               : "DD / MM / YYYY"}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
@@ -174,16 +186,15 @@ const AddPromoCodeForm = () => {
                         <FormControl>
                           <Button
                             variant="outline"
-                            className={`h-[56px] pl-3 text-left font-normal ${
-                              !field.value && "text-muted-foreground"
-                            }`}
+                            className={`h-[56px] pl-3 text-left font-normal ${!field.value && "text-muted-foreground"
+                              }`}
                           >
                             {field.value
                               ? field.value.toLocaleDateString("en-US", {
-                                  day: "2-digit",
-                                  month: "long",
-                                  year: "numeric",
-                                })
+                                day: "2-digit",
+                                month: "long",
+                                year: "numeric",
+                              })
                               : "DD / MM / YYYY"}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
@@ -212,15 +223,16 @@ const AddPromoCodeForm = () => {
                       Status
                     </FormLabel>
                     <FormControl>
-                      <Select  onValueChange={field.onChange}
-          defaultValue={field.value}>
+                      <Select onValueChange={field.onChange}
+                        defaultValue={field.value}>
                         <SelectTrigger className="h-[56px] rounded-[6px] border border-[#00000033]">
                           <SelectValue placeholder="Select a time" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
                             <SelectItem value="active">Active</SelectItem>
-                            <SelectItem value="schedule">Schedule</SelectItem>
+                            <SelectItem value="inactive">Inactive</SelectItem>
+                            <SelectItem value="expired">Expired</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
