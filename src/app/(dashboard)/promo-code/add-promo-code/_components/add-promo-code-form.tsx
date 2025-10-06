@@ -246,7 +246,7 @@ const AddPromoCodeForm = () => {
             {/* button  */}
             <div className="flex items-center justify-center gap-5 py-2">
               <Button
-              onClick={() => form.reset()}
+                onClick={() => form.reset()}
                 className="h-[50px] flex items-center gap-2 text-lg font-medium leading-[120%] text-[#499FC0] hover:bg-[#499FC0]/90 hover:text-white bg-transparent rounded-[8px] py-[14] px-[44px]"
                 type="button"
               >
