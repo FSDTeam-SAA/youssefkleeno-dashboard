@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
-import { CalendarIcon, X } from "lucide-react";
+import { CalendarIcon, Loader2, X } from "lucide-react";
 import { useAddPromocode } from "@/hooks/ApiClling";
 
 const formSchema = z.object({
@@ -246,16 +246,17 @@ const AddPromoCodeForm = () => {
             {/* button  */}
             <div className="flex items-center justify-center gap-5 py-2">
               <Button
-                className="h-[50px] flex items-center gap-2 text-lg font-medium leading-[120%] text-[#499FC0] bg-transparent rounded-[8px] py-[14] px-[44px]"
+              onClick={() => form.reset()}
+                className="h-[50px] flex items-center gap-2 text-lg font-medium leading-[120%] text-[#499FC0] hover:bg-[#499FC0]/90 hover:text-white bg-transparent rounded-[8px] py-[14] px-[44px]"
                 type="button"
               >
                 <X className="w-5 h-5" /> Cancel
               </Button>
               <Button
-                className="h-[54px] text-lg font-medium leading-[120%] text-white bg-[#499FC0] rounded-[8px] py-4 px-[79px]"
+                className="h-[54px] text-lg font-medium leading-[120%] text-white bg-[#499FC0] hover:bg-[#499FC0]/90 hover:text-white flex items-center gap-[10px] rounded-[8px] py-4 px-[79px]"
                 type="submit"
               >
-                Save
+                Save{addPromocode.isPending && <Loader2 className="animate-spin" />}
               </Button>
             </div>
           </form>
