@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -22,27 +22,26 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Card, CardContent } from "@/components/ui/card";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
+// Zod schema
 const formSchema = z.object({
   serviceName: z.string().min(1, "Service name is required"),
   price: z.string().min(1, "Price is required"),
   note: z.string().optional(),
-  serviceImage: z.any().refine((file) => file instanceof File, {
-    message: "Please upload a service image",
-  }),
+  serviceImage: z.any().optional(),
 });
 
-export default function AddOneTimeWash() {
+export default function EditMonthlyWashService() {
   const [preview, setPreview] = useState<string | null>(null);
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { id } = useParams();
   const TOKEN =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGJmZjg3NzIwZmZmYTNiYjA2ZjEyMDYiLCJlbWFpbCI6Im5pbG95QGV4YW1wbGUuY29tIiwiaWF0IjoxNzU5NzI5MTQ3LCJleHAiOjE3NTk4MTU1NDd9.SHo5_-R3RJczCS2A6m4HHgAsHuRvFVDB3oaAYXHkXgI";
 
@@ -50,50 +49,77 @@ export default function AddOneTimeWash() {
     resolver: zodResolver(formSchema),
   });
 
-  const addServiceMutation = useMutation({
-    mutationFn: async (data: FormData) => {
+  // 🔹 Fetch existing service data
+  const { data, isLoading } = useQuery({
+    queryKey: ["service", id],
+    queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/service`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/service/${id}`
+      );
+      if (!res.ok) throw new Error("Failed to fetch service");
+      return res.json();
+    },
+  });
+
+  // 🔹 Prefill form when data loads
+  useEffect(() => {
+    if (data?.data) {
+      form.setValue("serviceName", data.data.serviceName || "");
+      form.setValue(
+        "price",
+        data.data.price != null ? data.data.price.toString() : ""
+      ); // convert number to string
+      form.setValue("note", data.data.note || "");
+      setPreview(data.data.serviceImage?.url || null);
+    }
+  }, [data, form]);
+
+  // 🔹 Update service mutation
+  const updateServiceMutation = useMutation({
+    mutationFn: async (formData: FormData) => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/service/${id}`,
         {
-          method: "POST",
+          method: "PATCH",
           headers: {
             Authorization: `Bearer ${TOKEN}`,
           },
-          body: data,
+          body: formData,
         }
       );
-      if (!res.ok) throw new Error("Failed to create service");
+      if (!res.ok) throw new Error("Failed to update service");
       return res.json();
     },
     onSuccess: () => {
-      toast.success("Service created successfully!");
-      form.reset();
-      setPreview(null);
-      queryClient.invalidateQueries({ queryKey: ["services"] });
-      router.push("/services/one-time-wash");
+      toast.success("Service updated successfully!");
+      queryClient.invalidateQueries({ queryKey: ["service", id] });
+      router.push("/services/monthly-subscription");
     },
     onError: () => {
-      toast.error("Failed to create service. Try again.");
+      toast.error("Failed to update service. Try again.");
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const formData = new FormData();
     formData.append("serviceName", values.serviceName);
-    formData.append("price", values.price);
-    formData.append("washType", "One-time Wash"); // always fixed
+    formData.append("price", values.price); // string
+    formData.append("washType", "Monthly Subscription"); // hardcoded
     if (values.note) formData.append("note", values.note);
-    if (values.serviceImage)
+    if (values.serviceImage instanceof File)
       formData.append("serviceImage", values.serviceImage);
 
-    addServiceMutation.mutate(formData);
+    updateServiceMutation.mutate(formData);
   }
+
+  if (isLoading)
+    return <p className="text-center py-10 text-lg">Loading service data...</p>;
 
   return (
     <Card className="pt-8 px-6">
       <Breadcrumb>
         <p className="text-[#2F2F2F] font-semibold text-[24px] mb-4">
-          Add Services
+          Edit Service
         </p>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -105,11 +131,7 @@ export default function AddOneTimeWash() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href="/">Add One Time Wash</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Add Services</BreadcrumbPage>
+            <BreadcrumbLink href="/">Edit Monthly Wash</BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
@@ -185,12 +207,14 @@ export default function AddOneTimeWash() {
                 name="serviceImage"
                 render={({ field }) => (
                   <FormItem className="col-span-2">
-                    <FormLabel>Add Service Image</FormLabel>
+                    <FormLabel>Update Service Image</FormLabel>
                     <FormControl>
                       <div
                         className="w-full h-32 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center cursor-pointer relative"
                         onClick={() =>
-                          document.getElementById("serviceImageInput")?.click()
+                          document
+                            .getElementById("editServiceImageInput")
+                            ?.click()
                         }
                       >
                         {preview ? (
@@ -208,7 +232,7 @@ export default function AddOneTimeWash() {
                           </div>
                         )}
                         <input
-                          id="serviceImageInput"
+                          id="editServiceImageInput"
                           type="file"
                           accept="image/*"
                           className="hidden"
@@ -234,17 +258,17 @@ export default function AddOneTimeWash() {
                 type="button"
                 variant="ghost"
                 className="text-[#499FC0] hover:text-[#499FC0]/90"
-                onClick={() => form.reset()}
-                disabled={addServiceMutation.isPending}
+                onClick={() => router.back()}
+                disabled={updateServiceMutation.isPending}
               >
                 <X /> Cancel
               </Button>
               <Button
                 type="submit"
                 className="bg-btnPrimary hover:bg-btnPrimary/90"
-                disabled={addServiceMutation.isPending}
+                disabled={updateServiceMutation.isPending}
               >
-                {addServiceMutation.isPending ? "Saving..." : "Save"}
+                {updateServiceMutation.isPending ? "Updating..." : "Update"}
               </Button>
             </div>
           </form>

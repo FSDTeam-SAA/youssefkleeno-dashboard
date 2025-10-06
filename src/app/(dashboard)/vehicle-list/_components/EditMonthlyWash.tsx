@@ -27,7 +27,7 @@ interface Vehicle {
   };
 }
 
-export default function EditOneTimeWash() {
+export default function EditMonthlyWash() {
   const [vehicleName, setVehicleName] = useState("");
   const [vehicleImage, setVehicleImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -35,14 +35,13 @@ export default function EditOneTimeWash() {
 
   const params = useParams();
   const id = params.id as string;
-  const TOKEN =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGJmZjg3NzIwZmZmYTNiYjA2ZjEyMDYiLCJlbWFpbCI6Im5pbG95QGV4YW1wbGUuY29tIiwiaWF0IjoxNzU5NzI5MTQ3LCJleHAiOjE3NTk4MTU1NDd9.SHo5_-R3RJczCS2A6m4HHgAsHuRvFVDB3oaAYXHkXgI"; // ⚠️ Token replace করো
+  const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGJmZjg3NzIwZmZmYTNiYjA2ZjEyMDYiLCJlbWFpbCI6Im5pbG95QGV4YW1wbGUuY29tIiwiaWF0IjoxNzU5NzI5MTQ3LCJleHAiOjE3NTk4MTU1NDd9.SHo5_-R3RJczCS2A6m4HHgAsHuRvFVDB3oaAYXHkXgI"; // ⚠️ Token replace করো
 
   const queryClient = useQueryClient();
 
   // Fetch vehicle
   const { data, isLoading, error } = useQuery({
-    queryKey: ["singleOntimeWash", id],
+    queryKey: ["singleMonthlyWash", id],
     queryFn: async () => {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/vehicle/${id}`,
@@ -92,8 +91,8 @@ export default function EditOneTimeWash() {
     },
     onSuccess: () => {
       toast.success("Vehicle updated successfully!");
-      queryClient.invalidateQueries({ queryKey: ["singleOntimeWash", id] });
-      router.push("/vehicle-list/one-time-wash")
+      queryClient.invalidateQueries({ queryKey: ["singleMonthlyWash", id] });
+      router.push("/vehicle-list/monthly-subscription");
     },
     onError: () => {
       toast.error("Failed to update vehicle. Try again.");
@@ -105,26 +104,18 @@ export default function EditOneTimeWash() {
   };
 
   if (isLoading) {
-    return (
-      <p className="text-center py-10 text-lg">Loading vehicle details...</p>
-    );
+    return <p className="text-center py-10 text-lg">Loading vehicle details...</p>;
   }
 
   if (error) {
-    return (
-      <p className="text-center text-red-500 py-10">
-        Failed to load vehicle data
-      </p>
-    );
+    return <p className="text-center text-red-500 py-10">Failed to load vehicle data</p>;
   }
 
   return (
     <Card className="pt-8 px-6">
       {/* Breadcrumb */}
       <Breadcrumb>
-        <p className="text-[#2F2F2F] font-semibold text-[24px] mb-4">
-          Vehicle List
-        </p>
+        <p className="text-[#2F2F2F] font-semibold text-[24px] mb-4">Vehicle List</p>
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
@@ -135,7 +126,7 @@ export default function EditOneTimeWash() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Edit One-time Vehicle</BreadcrumbPage>
+            <BreadcrumbPage>Edit Monthly Vehicle</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
@@ -210,6 +201,7 @@ export default function EditOneTimeWash() {
                 setVehicleImage(null);
                 setPreview(vehicle?.vehicleImage?.url || null);
               }}
+              disabled={updateMutation.isPending} // cancel disable while updating
             >
               <X /> Cancel
             </Button>
@@ -218,8 +210,7 @@ export default function EditOneTimeWash() {
               className="bg-btnPrimary hover:bg-btnPrimary/90"
               disabled={updateMutation.isPending} // button disable during mutation
             >
-              {updateMutation.isPending ? "Saving..." : "Save"}{" "}
-              {/* loading text */}
+              {updateMutation.isPending ? "Saving..." : "Save"} {/* loading text */}
             </Button>
           </div>
         </form>
