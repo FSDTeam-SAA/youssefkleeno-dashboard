@@ -12,6 +12,7 @@ import {
 import { Bike, Pencil, Trash2 } from "lucide-react"
 import YoussefkleenoPagination from "@/components/ui/YoussefkleenoPagination"
 import { useQuery } from "@tanstack/react-query"
+import Link from "next/link"
 
 // 🔹 API Response Types
 interface Vehicle {
@@ -114,7 +115,7 @@ const ListofOneTimeVehicle: React.FC = () => {
                             {/* Actions */}
                             <TableCell>
                                 <div className="flex justify-center items-center gap-3">
-                                    <Pencil className="w-4 h-4 cursor-pointer text-muted-foreground hover:text-blue-600" />
+                                   <Link href={`/vehicle-list/edit-one-time-wash/${v?._id}`}><Pencil className="w-4 h-4 cursor-pointer text-muted-foreground hover:text-blue-600" /></Link>
                                     <Trash2 className="w-4 h-4 cursor-pointer text-muted-foreground hover:text-red-600" />
                                 </div>
                             </TableCell>
