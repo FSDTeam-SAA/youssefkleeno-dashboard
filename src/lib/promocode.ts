@@ -1,7 +1,7 @@
 import { PromoCodeInput, PromoCodeResponse, SinglePromocodeResponse } from "@/types/promoCodeDataType"
 
-export async function getPromocode(token: string): Promise<PromoCodeResponse> {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/promo-code`, {
+export async function getPromocode(token: string, currentPage: number, limit: number): Promise<PromoCodeResponse> {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/promo-code?page=${currentPage}&limit=${limit}`, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -15,7 +15,6 @@ export async function getPromocode(token: string): Promise<PromoCodeResponse> {
 }
 
 export async function addPromocode(token: string, payload: PromoCodeInput) {
-  console.log(payload)
   const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/promo-code`, {
     method: "POST",
     headers: {

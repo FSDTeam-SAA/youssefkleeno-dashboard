@@ -1,7 +1,11 @@
+import { getBooking } from "@/lib/booking";
 import { getProfile, ProfileUpdatePayload, updateProfileInfo } from "@/lib/profileInfo";
 import { addPromocode, deletePromocode, editPromocode, getPromocode, getSinglePromocode } from "@/lib/promocode";
+import { getUser } from "@/lib/userMangement";
+import { BookingResponse } from "@/types/bookingDataType";
 import { PromoCodeInput, PromoCodeResponse, SinglePromocodeResponse } from "@/types/promoCodeDataType";
 import { ProfileResponse } from "@/types/userDataType";
+import { UsersResponse } from "@/types/userMangementDataType";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -33,12 +37,12 @@ export function useProfileInfoUpdate(token: string, onSuccessCallback?: () => vo
     });
 }
 
-export function useGetPromocode(token: string | undefined) {
+export function useGetPromocode(token: string | undefined, currentPage: number, limit: number) {
     return useQuery<PromoCodeResponse>({
-        queryKey: ["promocode"],
+        queryKey: ["promocode", currentPage, limit],
         queryFn: () => {
             if (!token) throw new Error("Token is missing")
-            return getPromocode(token)
+            return getPromocode(token, currentPage, limit)
         },
         enabled: !!token,
     })
@@ -104,4 +108,27 @@ export function useDeletePromocode(token: string, id: string, onSuccessCallback?
             else toast.error("Update failed");
         },
     });
+}
+
+
+export function useGetBooking(token: string | undefined, currentPage: number, limit: number, bookingType: string) {
+    return useQuery<BookingResponse>({
+        queryKey: ["booking", currentPage, limit],
+        queryFn: () => {
+            if (!token) throw new Error("Token is missing")
+            return getBooking(token, currentPage, limit, bookingType)
+        },
+        enabled: !!token,
+    })
+}
+
+export function useGetUser(token: string | undefined, currentPage: number, limit: number, bookingType: string) {
+    return useQuery<UsersResponse>({
+        queryKey: ["user", currentPage, limit],
+        queryFn: () => {
+            if (!token) throw new Error("Token is missing")
+            return getUser(token, currentPage, limit, bookingType)
+        },
+        enabled: !!token,
+    })
 }
