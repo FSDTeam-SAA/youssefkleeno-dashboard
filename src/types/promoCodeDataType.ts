@@ -10,34 +10,30 @@ export interface PromoCode {
   __v: number;
 }
 
+export interface PromoCodePagination {
+  promoCodes: PromoCode[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
 export interface PromoCodeResponse {
   success: boolean;
   message: string;
-  data: PromoCode[];
+  data: PromoCodePagination;
 }
 
 export interface PromoCodeInput {
-  code: string
-  discountPrice: number
-  startDate: Date
-  expiryDate: Date
-  status: string
+  code: string;
+  discountPrice: number;
+  startDate: Date;
+  expiryDate: Date;
+  status: string;
 }
 
 export interface SinglePromocodeResponse {
   success: boolean;
   message: string;
   data: PromoCode;
-}
-
-export interface PromoCode {
-  _id: string;
-  code: string;
-  discountPrice: number;
-  startDate: string;   // ISO date string
-  expiryDate: string;  // ISO date string
-  status: "active" | "inactive" | "expired"; // limit to possible values
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
 }

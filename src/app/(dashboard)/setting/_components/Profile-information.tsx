@@ -22,7 +22,7 @@ import { Loader2 } from "lucide-react";
 export function PersonalInformation() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGJmZjg3NzIwZmZmYTNiYjA2ZjEyMDYiLCJlbWFpbCI6Im5pbG95QGV4YW1wbGUuY29tIiwiaWF0IjoxNzU5Mzk3OTI1LCJleHAiOjE3NTk0ODQzMjV9.sLl3FujxPqzpHsnClunVYreoCFhjdl08nrnh1uVCf0s";
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGJmZjg3NzIwZmZmYTNiYjA2ZjEyMDYiLCJlbWFpbCI6Im5pbG95QGV4YW1wbGUuY29tIiwiaWF0IjoxNzU5NzIyNTgyLCJleHAiOjE3NTk4MDg5ODJ9.n0BVCXZsMmZhGIiKfUQ0lFBU2_PgxlU6lQRXswDc4Uo";
   const { data } = useProfileQuery(token);
   const profile = data?.data;
   const profileMutation = useProfileInfoUpdate(token);
