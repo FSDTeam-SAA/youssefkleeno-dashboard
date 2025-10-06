@@ -29,6 +29,7 @@ const formSchema = z.object({
 })
 
 export default function AddVehicle() {
+
     const [preview, setPreview] = useState<string | null>(null)
 
     const form = useForm<z.infer<typeof formSchema>>({
