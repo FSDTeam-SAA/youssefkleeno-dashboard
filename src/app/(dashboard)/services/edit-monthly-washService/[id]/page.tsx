@@ -1,10 +1,10 @@
 import React from 'react'
-import EditOneTimeWashService from '../../_components/EditOneTimeWashService'
+import EditMonthlyWashService from '../../_components/EditMonthlyWashService'
 
 function page() {
   return (
     <div>
-        <EditOneTimeWashService />
+        <EditMonthlyWashService />
     </div>
   )
 }
