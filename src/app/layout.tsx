@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/providers/query-provider";
-import AuthProvider from "@/providers/AuthProvider";
+import { Toaster } from "sonner";
+
 
 const geistSans = Montserrat({
   subsets: ["latin"],
@@ -22,10 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.className} antialiased`}>
-        <AuthProvider>
-          <QueryProvider>{children}</QueryProvider>
-        </AuthProvider>
+      <body
+        className={`${geistSans.className} antialiased`}
+      >
+        <QueryProvider>
+          <Toaster/>
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );

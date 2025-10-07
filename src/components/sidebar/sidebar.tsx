@@ -18,6 +18,7 @@ import {
   ChevronDown,
   ChevronRight,
 } from "lucide-react"
+import Image from "next/image"
 
 interface SubItem {
   name: string
@@ -86,8 +87,8 @@ export function Sidebar() {
     <div className="flex h-screen sticky bottom-0 top-0 w-[320px] flex-col shadow-[0px_16px_48px_0px_#00000029] bg-[#FFFFFF] z-50">
       <div className="h-[80px] flex items-center justify-center mt-7 mb-8 px-4">
         <div className="flex items-center gap-2">
-          <Car className="h-8 w-8 text-[#499FC0]" />
-          <span className="text-xl font-semibold text-[#499FC0]">CarWash</span>
+          <Image src={'/logo.png'} width={1082} height={960} alt="auth logo" className="w-28 h-28  object-cover" />
+
         </div>
       </div>
 
@@ -108,7 +109,7 @@ export function Sidebar() {
                 // Dropdown parent (no Link, only toggle)
                 <div
                   className={cn(
-                    "flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 cursor-pointer",
+                    "flex w-full items-center justify-between rounded-lg px-3 py-4  text-sm font-medium transition-all duration-200 cursor-pointer",
                     isActive || isDropdownOpen
                       ? "bg-[#E8F4F8]"
                       : "hover:bg-[#499FC01A]/20 hover:text-black",

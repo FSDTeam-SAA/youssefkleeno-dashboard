@@ -1,89 +1,127 @@
+
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
-import Image from "next/image";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { useProfileInfoUpdate, useProfileQuery } from "@/hooks/ApiClling";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ProfileUpdatePayload } from "@/lib/profileInfo";
+import { Loader2 } from "lucide-react";
 
 export function PersonalInformation() {
-  const [isEditing, setIsEditing] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGJmZjg3NzIwZmZmYTNiYjA2ZjEyMDYiLCJlbWFpbCI6Im5pbG95QGV4YW1wbGUuY29tIiwiaWF0IjoxNzU5NzIyNTgyLCJleHAiOjE3NTk4MDg5ODJ9.n0BVCXZsMmZhGIiKfUQ0lFBU2_PgxlU6lQRXswDc4Uo";
+  const { data } = useProfileQuery(token);
+  const profile = data?.data;
+  const profileMutation = useProfileInfoUpdate(token);
+
   const [formData, setFormData] = useState({
-    fullName: "John Smith",
-    email: "john.smith@example.com",
-    phone: "(555) 123-4567",
-    dateOfBirth: "1985-06-15",
-    streetAddress: "123 Main Street",
-    city: "New York",
-    state: "NY",
-    zipCode: "10001",
+    fullName: "",
+    email: "",
+    phone: "",
+    dateOfBirth: "",
+    streetAddress: "",
+    city: "",
+    state: "",
+    zipCode: "",
   });
+
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  // Populate form when profile data is available
+  useEffect(() => {
+    if (profile) {
+      setFormData({
+        fullName: profile.name ?? "",
+        email: profile.email ?? "",
+        phone: profile.phone ?? "",
+        dateOfBirth: profile.dob ?? "",
+        streetAddress: profile.street ?? "",
+        city: profile.city ?? "",
+        state: profile.state ?? "",
+        zipCode: profile.zip ?? "",
+      });
+      setPreviewUrl(profile?.avatar?.url || null);
+    }
+  }, [profile]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedImage(file);
+      setPreviewUrl(URL.createObjectURL(file));
+    }
+  };
+
   const handleSave = () => {
-    setTimeout(() => {
-      toast.success("Profile updated successfully!");
-      setIsEditing(false);
-    }, 1000);
-  };
+    const payload: ProfileUpdatePayload = {
+      name: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      dob: formData.dateOfBirth,
+      street: formData.streetAddress,
+      city: formData.city,
+      state: formData.state,
+      zip: formData.zipCode,
+      avatar: selectedImage || undefined,
+    };
 
-  const handleCancel = () => {
-    setFormData({
-      fullName: "John Smith",
-      email: "john.smith@example.com",
-      phone: "(555) 123-4567",
-      dateOfBirth: "1985-06-15",
-      streetAddress: "123 Main Street",
-      city: "New York",
-      state: "NY",
-      zipCode: "10001",
-    });
-    setIsEditing(false);
-  };
-
-  // Get first letter of the full name for avatar fallback
-  const getInitial = (name: string) => {
-    return name.charAt(0).toUpperCase();
+    profileMutation.mutate(payload);
   };
 
   return (
     <Card className="!border-none">
-        <Breadcrumb className="p-5">
-                  <p className="text-[#2F2F2F] font-semibold text-[24px] mb-4">
-                    Cancellation Policy
-                  </p>
-                  <BreadcrumbList>
-                    <BreadcrumbItem>
-                      <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                      <BreadcrumbPage>Overview</BreadcrumbPage>
-                    </BreadcrumbItem>
-                  </BreadcrumbList>
-                </Breadcrumb>
+      {/* Breadcrumb */}
+      <Breadcrumb className="p-5">
+        <p className="text-[#2F2F2F] font-semibold text-[24px] mb-4">
+          Personal Information
+        </p>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Overview</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+      {/* Header with avatar */}
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6 !bg-white rounded-tl-[8px] rounded-tr-[8px] !shadow-none">
         <CardTitle className="text-[18px] font-semibold text-[#282828] flex items-center gap-4">
-          <div className="relative w-[50px] h-[50px] rounded-full overflow-hidden bg-[#499FC0] flex items-center justify-center">
-            {formData.fullName ? (
-              <span className="text-white text-2xl font-bold">
-                {getInitial(formData.fullName)}
-              </span>
-            ) : (
-              <Image
-                src="/images/avatar.png"
-                width={50}
-                height={50}
-                alt="avatar"
-                className="object-cover"
-              />
-            )}
+          <div className="relative">
+            <Avatar
+              className="w-24 h-24 cursor-pointer"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <AvatarImage src={previewUrl || ""} />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+            />
           </div>
           <div>
             <div>
@@ -99,6 +137,8 @@ export function PersonalInformation() {
           </div>
         </CardTitle>
       </CardHeader>
+
+      {/* Form */}
       <CardContent className="space-y-6 bg-white pt-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
@@ -109,8 +149,7 @@ export function PersonalInformation() {
               id="fullName"
               value={formData.fullName}
               onChange={(e) => handleInputChange("fullName", e.target.value)}
-              disabled={!isEditing}
-              className="disabled:text-gray-900 border border-[#0000004D] rounded-[8px] h-[50px]"
+              className="border border-[#0000004D] rounded-[8px] h-[50px]"
             />
           </div>
           <div className="space-y-2">
@@ -120,13 +159,14 @@ export function PersonalInformation() {
             <Input
               id="email"
               type="email"
+              disabled
               value={formData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
-              disabled={!isEditing}
-              className="disabled:text-gray-900 border border-[#0000004D] rounded-[8px] h-[50px]"
+              className="border border-[#0000004D] rounded-[8px] h-[50px]"
             />
           </div>
         </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <Label htmlFor="phone" className="text-sm font-normal text-[#499FC0]">
@@ -136,8 +176,7 @@ export function PersonalInformation() {
               id="phone"
               value={formData.phone}
               onChange={(e) => handleInputChange("phone", e.target.value)}
-              disabled={!isEditing}
-              className="disabled:text-gray-900 border border-[#0000004D] rounded-[8px] h-[50px]"
+              className="border border-[#0000004D] rounded-[8px] h-[50px]"
             />
           </div>
           <div className="space-y-2">
@@ -149,11 +188,11 @@ export function PersonalInformation() {
               type="date"
               value={formData.dateOfBirth}
               onChange={(e) => handleInputChange("dateOfBirth", e.target.value)}
-              disabled={!isEditing}
-              className="disabled:text-gray-900 border border-[#0000004D] rounded-[8px] h-[50px]"
+              className="border border-[#0000004D] rounded-[8px] h-[50px]"
             />
           </div>
         </div>
+
         <div className="space-y-2">
           <Label htmlFor="streetAddress" className="text-sm font-normal text-[#499FC0]">
             Street Address
@@ -162,10 +201,10 @@ export function PersonalInformation() {
             id="streetAddress"
             value={formData.streetAddress}
             onChange={(e) => handleInputChange("streetAddress", e.target.value)}
-            disabled={!isEditing}
-            className="disabled:text-gray-900 border border-[#0000004D] rounded-[8px] h-[50px]"
+            className="border border-[#0000004D] rounded-[8px] h-[50px]"
           />
         </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-2">
             <Label htmlFor="city" className="text-sm font-normal text-[#499FC0]">
@@ -175,8 +214,7 @@ export function PersonalInformation() {
               id="city"
               value={formData.city}
               onChange={(e) => handleInputChange("city", e.target.value)}
-              disabled={!isEditing}
-              className="disabled:text-gray-900 border border-[#0000004D] rounded-[8px] h-[50px]"
+              className="border border-[#0000004D] rounded-[8px] h-[50px]"
             />
           </div>
           <div className="space-y-2">
@@ -187,8 +225,7 @@ export function PersonalInformation() {
               id="state"
               value={formData.state}
               onChange={(e) => handleInputChange("state", e.target.value)}
-              disabled={!isEditing}
-              className="disabled:text-gray-900 border border-[#0000004D] rounded-[8px] h-[50px]"
+              className="border border-[#0000004D] rounded-[8px] h-[50px]"
             />
           </div>
           <div className="space-y-2">
@@ -199,33 +236,20 @@ export function PersonalInformation() {
               id="zipCode"
               value={formData.zipCode}
               onChange={(e) => handleInputChange("zipCode", e.target.value)}
-              disabled={!isEditing}
-              className="disabled:text-gray-900 border border-[#0000004D] rounded-[8px] h-[50px]"
+              className="border border-[#0000004D] rounded-[8px] h-[50px]"
             />
           </div>
         </div>
-        {isEditing && (
-          <div className="flex justify-center gap-3 pt-4">
-            <Button variant="outline" onClick={handleCancel}>
-              Cancel
-            </Button>
-            <Button onClick={handleSave} className="bg-[#499FC0] hover:bg-[#499FC0]/90">
-              Update now
-            </Button>
-          </div>
-        )}
-      </CardContent>
-      {!isEditing && (
-        <div className="flex justify-center py-5">
+
+        <div className="flex justify-center pt-4">
           <Button
-            variant="outline"
-            onClick={() => setIsEditing(true)}
-            className="text-white bg-[#499FC0] border-[#499FC0] hover:bg-[#499FC0]/90 hover:text-white"
+            onClick={handleSave}
+            className="bg-[#499FC0] hover:bg-[#499FC0]/90"
           >
-            Update profile
+            Update now {profileMutation.isPending && <Loader2 className="mr-2 spin-in animate-spin" />}
           </Button>
         </div>
-      )}
+      </CardContent>
     </Card>
   );
 }
