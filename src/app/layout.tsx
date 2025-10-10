@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import {Montserrat} from 'next/font/google';
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/providers/query-provider";
 import { Toaster } from "sonner";
@@ -8,7 +8,7 @@ import { Toaster } from "sonner";
 const geistSans = Montserrat({
   subsets: ["latin"],
   variable: "--font-geist-sans",
-  weight: ["100","200","400", "500", "600", "700"],
+  weight: ["100", "200", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
